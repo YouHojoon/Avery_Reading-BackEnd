@@ -1,26 +1,28 @@
 package ac.kr.smu.service;
 
 import ac.kr.smu.domain.User;
+import ac.kr.smu.domain.enums.UserRole;
 import ac.kr.smu.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class UserService {
 
-    private UserRepository userRepository;
-
-    public UserService(UserRepository userRepository){this.userRepository=userRepository;}
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     public void register(User user){
-        user.setPasswd(encodePassword(user.getPasswd()));
+        user.setPasswd(passwordEncoder.encode(user.getPasswd()));
+        user.setRole(UserRole.USER);
         userRepository.save(user);
     }
-    private String encodePassword(String password){
-        BCryptPasswordEncoder bCryptPasswordEncoder = new BCryptPasswordEncoder();
-        return bCryptPasswordEncoder.encode(password);
-    }
+
 
 }

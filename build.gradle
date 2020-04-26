@@ -50,6 +50,7 @@ subprojects{
 project(":bookclub-api"){
     dependencies{
         implementation 'com.fasterxml.jackson.datatype:jackson-datatype-jsr310:2.10.3'
+        implementation 'io.jsonwebtoken:jjwt:0.9.1'
     }
 }
 test {

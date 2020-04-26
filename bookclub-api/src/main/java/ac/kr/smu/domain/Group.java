@@ -14,14 +14,12 @@ import java.util.List;
 public class Group {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "GROUP_ID")
+    @Column(name = "ID")
     private Long id;
 
     @Column
     private String name;
 
-    @Column
-    private Long manager_uid;
 
     @Column
     @OneToMany(mappedBy = "group")
