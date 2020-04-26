@@ -1,10 +1,7 @@
 package ac.kr.smu.domain;
 
 import ac.kr.smu.domain.enums.UserRole;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -14,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+@Setter
 @ToString
 @Getter
 @NoArgsConstructor
@@ -53,11 +51,6 @@ public class User implements UserDetails {
         this.passwd = passwd;
         this.email = email;
     }
-    public void setPasswd(String passwd){
-        this.passwd=passwd;
-    }
-
-    public void setRole(UserRole role){this.role=role;}
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
