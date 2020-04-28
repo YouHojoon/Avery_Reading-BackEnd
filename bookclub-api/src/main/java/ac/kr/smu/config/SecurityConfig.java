@@ -20,7 +20,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.httpBasic().disable().authorizeRequests().antMatchers("/login").permitAll()
-                .antMatchers(HttpMethod.POST,"/users").permitAll().anyRequest().authenticated()
+                .antMatchers(HttpMethod.POST,"/users").permitAll()
+                .antMatchers(HttpMethod.POST,"/groups").hasRole("USER").anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable().addFilterBefore(new JwtAuthenticationFilter(jwtTokenProvider), UsernamePasswordAuthenticationFilter.class);
     }

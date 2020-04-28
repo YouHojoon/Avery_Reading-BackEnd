@@ -1,22 +1,29 @@
+import ac.kr.smu.domain.Group;
 import ac.kr.smu.domain.User;
+import ac.kr.smu.service.GroupService;
+import ac.kr.smu.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.junit4.SpringRunner;
 
-@RunWith(SpringRunner.class)
+import javax.transaction.Transactional;
+
+
 @SpringBootTest
+@ComponentScan("ac.kr.smu.service")
 public class bookclub_apiTest {
-    private TestRestTemplate testRestTemplate;
+
+
     @Test
+    @Transactional
     public void register(){
-        PasswordEncoder passwordEncoder= new BCryptPasswordEncoder();
-        User user=User.builder().id("dbghwns11").passwd(passwordEncoder.encode("1111"))
-                .email("dbghwns66@daum.net").name("유호준").build();
-        testRestTemplate.postForObject("http://localhost:8080/users",user,User.class);
+
     }
 }
