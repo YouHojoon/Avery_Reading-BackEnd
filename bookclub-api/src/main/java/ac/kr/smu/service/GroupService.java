@@ -23,6 +23,9 @@ public class GroupService {
         group.setCode(code);
         groupRepository.save(group);
     }
+    public Group findByCode(String code){
+        return groupRepository.findByCode(code).orElseThrow();
+    }
     private String makeCode(){
         StringBuffer code=new StringBuffer();
         for (int i=0; i<6; i++)
