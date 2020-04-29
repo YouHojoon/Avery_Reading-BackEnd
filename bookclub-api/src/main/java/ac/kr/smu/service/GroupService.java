@@ -9,7 +9,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
-public class GroupService {
+public class GroupService{
     private final GroupRepository groupRepository;
 
     public void register(Group group){

@@ -7,8 +7,6 @@ import ac.kr.smu.domain.enums.UserRole;
 import ac.kr.smu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -35,9 +33,8 @@ public class UserService {
     }
     public void setGroup(Group group){
         HttpServletRequest request = ((ServletRequestAttributes)RequestContextHolder.currentRequestAttributes()).getRequest();
-        String token=request.getHeader("X-AUTH-TOKEN");
-        Long uid=Long.valueOf(jwtTokenProvider.getUid(token));
-        User user= userRepository.getOne(uid);
+        String token=jwtTokenProvider.resolveToken(request);
+        User user= userRepository.getOne(Long.valueOf(jwtTokenProvider.getUid(token)));
         user.setGroup(group);
         if(request.getServletPath().contains("/groups") && request.getMethod().equals("POST"))
             user.setRole(UserRole.MANAGER);

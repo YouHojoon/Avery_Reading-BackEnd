@@ -1,6 +1,6 @@
 package ac.kr.smu.config;
 
-import ac.kr.smu.domain.User;
+
 import ac.kr.smu.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +16,6 @@ public class CustomUserDetailService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-       return userRepository.findByUid(Long.valueOf(username)).get();
+       return userRepository.findById(Long.valueOf(username)).orElseThrow();
     }
 }
