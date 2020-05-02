@@ -1,15 +1,16 @@
 package ac.kr.smu.domain;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Date;
 
-
+@ToString
 @Entity
 @Table
 @NoArgsConstructor
@@ -23,9 +24,8 @@ public class Schedule implements Serializable {
     @Column
     private String title;
 
-    @Column
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private Date D_day;
+    @Column(name = "d_day")
+    private Date d_day;
 
     @Column
     private String location;
@@ -40,17 +40,19 @@ public class Schedule implements Serializable {
     private String presentation;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "UID")
     private User user;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn(name = "GID")
     private Group group;
 
     @Builder
     Schedule(String title, Date D_day, String location, String content, String book, String presentation) {
         this.title = title;
-        this.D_day = D_day;
+        this.d_day = d_day;
         this.location = location;
         this.content = content;
         this.book = book;

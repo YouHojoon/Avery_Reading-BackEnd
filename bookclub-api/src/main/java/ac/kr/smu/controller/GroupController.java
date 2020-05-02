@@ -5,6 +5,7 @@ import ac.kr.smu.service.GroupService;
 import ac.kr.smu.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class GroupController {
     private final GroupService groupService;
     private final UserService userService;
 
-    @PostMapping
+    @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @Transactional
     public ResponseEntity<?> postGroup(@RequestBody Group group){
         groupService.register(group);

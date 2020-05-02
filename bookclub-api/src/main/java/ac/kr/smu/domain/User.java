@@ -18,7 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @Entity
 @Table
-public class User implements UserDetails, Serializable {
+public class User implements UserDetails{
 
     @Id
     @Column(name = "UID")
