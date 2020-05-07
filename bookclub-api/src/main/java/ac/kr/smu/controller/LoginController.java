@@ -11,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Map;
+
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
@@ -21,13 +24,13 @@ public class LoginController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     @PostMapping(path="/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> postLogin(String id, String passwd){
-        User user=userRepository.findById(id).orElseThrow(LoginException::new);
-        if(!passwordEncoder.matches(passwd,user.getPassword()))
+    public ResponseEntity<?> postLogin(Map<String, String> json){
+        User user=userRepository.findById(json.get("id")).orElseThrow(LoginException::new);
+        if(!passwordEncoder.matches(json.get("passwd"),user.getPassword()))
             throw new LoginException();
         String token= jwtTokenProvider.createToken(String.valueOf(user.getUid()),user.getRole().getAuthoritie());
         EntityModel<String> resource = new EntityModel<>(token);
-        resource.add(linkTo(methodOn(LoginController.class).postLogin(id,passwd)).withSelfRel());
+        resource.add(linkTo(methodOn(LoginController.class).postLogin(json)).withSelfRel());
         return ResponseEntity.ok(resource);
     }
 
