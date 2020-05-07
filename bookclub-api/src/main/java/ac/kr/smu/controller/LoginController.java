@@ -10,6 +10,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
@@ -24,7 +25,7 @@ public class LoginController {
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
     @PostMapping(path="/login", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> postLogin(Map<String, String> json){
+    public ResponseEntity<?> postLogin(@RequestBody Map<String, String> json){
         User user=userRepository.findById(json.get("id")).orElseThrow(LoginException::new);
         if(!passwordEncoder.matches(json.get("passwd"),user.getPassword()))
             throw new LoginException();
